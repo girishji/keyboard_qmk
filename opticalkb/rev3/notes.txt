@@ -1,0 +1,1 @@
+resistors next to IIRs are 100R and some are 82R. 3 IRs are connected in series to these resistors.

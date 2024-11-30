@@ -40,16 +40,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
-        _______, DYN_REC_START1, _______, DYN_MACRO_PLAY1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+        _______, DM_REC1, _______, DM_PLY1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_COMM, _______, _______, KC_MS_WH_UP,
         KC_AUDIO_MUTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_QUESTION, _______, KC_MS_WH_DOWN,
         QK_BOOT, _______, KC_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, LALT(KC_BSPC), KC_END, KC_HOME, RCTL(KC_T), _______, BL_UP, BL_DOWN
     )
 };
+
+
 // clang-format on
 
-void is31fl3731_all_led_on(uint8_t brightness_level);
-void is31fl3731_all_led_off(void);
+// void is31fl3731_all_led_on(uint8_t brightness_level);
+// void is31fl3731_all_led_off(void);
 
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
@@ -99,16 +101,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       SEND_STRING("../");
     }
     return false;
-  case LED_MATRIX_TOGGLE:
-    if (record->event.pressed) {
-      if (led_matrix_on) {
-        is31fl3731_all_led_off();
-      } else {
-        is31fl3731_all_led_on(25);
-      }
-      led_matrix_on = !led_matrix_on;
-    }
-    return false;
+  // case LED_MATRIX_TOGGLE:
+  //   if (record->event.pressed) {
+  //     if (led_matrix_on) {
+  //       is31fl3731_all_led_off();
+  //     } else {
+  //       is31fl3731_all_led_on(25);
+  //     }
+  //     led_matrix_on = !led_matrix_on;
+  //   }
+  //   return false;
   default:
     return true; // Process all other keycodes normally
   }

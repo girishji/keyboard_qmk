@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "config_common.h"
+// #include "config_common.h"
 
 /* key matrix size */
 #define MATRIX_ROWS 5
@@ -35,7 +35,7 @@
     #define LED_DRIVER_COUNT 1
     #define LED_MATRIX_LED_COUNT 72
     #define LED_DRIVER_ADDR_1 0b1110100
-    #define LED_DISABLE_WHEN_USB_SUSPENDED
+    #define LED_MATRIX_SLEEP
     /* limits maximum brightness of LEDs (max 256) */
     #define LED_MATRIX_MAXIMUM_BRIGHTNESS 130
     /* limits in milliseconds how frequently an animation will update the LEDs. 16

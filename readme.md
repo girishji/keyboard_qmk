@@ -1,4 +1,4 @@
-# Add your keyboard into qmk repository as a subtree
+# Add this keyboard into qmk repository as a subtree
 ```
 ❯ git clone https://github.com/qmk/qmk_firmware
 ❯ cd qmk_firmware

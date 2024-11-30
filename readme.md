@@ -1,3 +1,4 @@
+```
 # Add your keyboard into qmk repository as a subtree
 ❯ git clone https://github.com/qmk/qmk_firmware
 ❯ cd qmk_firmware
@@ -12,3 +13,4 @@
 
 # Commit to subtree directly
 ❯ git subtree push --prefix=keyboards/girish keyboard_qmk main
+```

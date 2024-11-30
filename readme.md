@@ -4,7 +4,6 @@
 ❯ cd qmk_firmware
 ❯ git remote add -f keyboard_qmk https://github.com/girishji/keyboard_qmk.git
 ❯ git subtree add --prefix=keyboards/girish keyboard_qmk main
-<!-- ❯ git subtree add --prefix=keyboards/girish keyboard_qmk main --squash -->
 ```
 
 # Commit to subtree directly

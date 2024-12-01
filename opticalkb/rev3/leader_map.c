@@ -15,6 +15,10 @@ void leader_fa(void) {
     SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
     for (int i = 0; i < 13; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
+void leader_ft(void) {
+    SEND_STRING("for(auto it=.begin(); it!=.end(); it++) {\n}" SS_TAP(X_UP));
+    for (int i = 0; i < 11; i++) SEND_STRING(SS_TAP(X_RIGHT));
+}
 void leader_fe(void) {
     SEND_STRING("ranges::for_each(, [](int& n) {});");
     for (int i = 0; i < 17; i++) SEND_STRING(SS_TAP(X_LEFT));
@@ -75,6 +79,7 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);
     leader_map_key_sequence(leader_fj, 2, KC_F, KC_J);
     leader_map_key_sequence(leader_fa, 2, KC_F, KC_A);
+    leader_map_key_sequence(leader_ft, 2, KC_F, KC_T);
     leader_map_key_sequence(leader_fe, 2, KC_F, KC_E);
     leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
     leader_map_key_sequence(leader_pp, 2, KC_P, KC_P);

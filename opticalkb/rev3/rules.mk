@@ -24,7 +24,6 @@ RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 AUDIO_ENABLE = no           # Audio output
 DYNAMIC_MACRO_ENABLE = yes  # Dynamic macros
 CAPS_WORD_ENABLE = yes      # Enable current word being typed to be all caps
-LEADER_ENABLE = yes         # Leader key
 
 OPT_DEFS += -DHAL_USE_I2C=TRUE
 LED_MATRIX_ENABLE = no
@@ -32,8 +31,9 @@ LED_MATRIX_ENABLE = no
 # LED_MATRIX_ENABLE = yes
 # LED_MATRIX_DRIVER = IS31FL3731
 
-# CONSOLE_ENABLE = yes        # Console for debug
-CONSOLE_ENABLE = no        # Console for debug
+CONSOLE_ENABLE = yes        # Console for debug
+# CONSOLE_ENABLE = no        # Console for debug
 
 CUSTOM_MATRIX = lite
 SRC += matrix.c
+SRC += leader.c

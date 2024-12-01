@@ -1,7 +1,7 @@
-// Copyright 2022 Girish Palya (@girishji)
-// SPDX-License-Identifier: GPL-2.0-or-later
+#pragma once
 
 #include QMK_KEYBOARD_H
+#include "leader.h"
 
 bool is_cmd_grv_active = false;
 uint16_t cmd_grv_timer = 0;
@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         CMD_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, LGUI(KC_LEFT), LGUI(KC_RIGHT),
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
-        OSM(QK_LEAD), OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
+        QK_LEADER, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
         CMD_GRV, OSM(MOD_LALT), KC_BTN1, OSL(_FN), OSM(MOD_LGUI), KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, OSM(MOD_RALT), KC_KB_MUTE, KC_LEFT, KC_RIGHT
     ),
     [_FN]   = LAYOUT(
@@ -53,14 +53,85 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // void is31fl3731_all_led_on(uint8_t brightness_level);
 // void is31fl3731_all_led_off(void);
 
+void leader_fi(void) {
+    SEND_STRING("for(int i = 0; i < ; i++) {\n}" SS_TAP(X_UP));
+    for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
+}
+void leader_fj(void) {
+    SEND_STRING("for(int j = 0; j < ; j++) {\n}" SS_TAP(X_UP));
+    for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
+}
+void leader_fa(void) {
+    SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
+    for (int i = 0; i < 13; i++) SEND_STRING(SS_TAP(X_RIGHT));
+}
+void leader_fe(void) {
+    SEND_STRING("ranges::for_each(, [](int& n) {});");
+    for (int i = 0; i < 17; i++) SEND_STRING(SS_TAP(X_LEFT));
+}
+void leader_pr(void) {
+    SEND_STRING("ranges::for_each(, [](const int& n) {cout << n;});cout<<endl;");
+    for (int i = 0; i < 45; i++) SEND_STRING(SS_TAP(X_LEFT));
+}
+void leader_pp(void) {
+    SEND_STRING("ranges::copy(, ostream_iterator<int>(cout, \" \"));cout<<endl;");
+    for (int i = 0; i < 47; i++) SEND_STRING(SS_TAP(X_LEFT));
+}
+void leader_be(void) {
+    SEND_STRING("a.begin(), a.end()");
+}
+void leader_mx(void) {
+    SEND_STRING("ranges::max_element(");
+}
+void leader_ds(void) {
+    SEND_STRING("ranges::distance(");
+}
+void leader_i(void) {
+    SEND_STRING("typedef signed long long ll;\n");
+    SEND_STRING("typedef vector<int> vi;\n");
+    SEND_STRING("typedef vector<vector<int>> vii;\n");
+    SEND_STRING("typedef pair<int,int> pi;\n");
+    SEND_STRING("typedef vector<string> vs;\n");
+    SEND_STRING("#define F first\n");
+    SEND_STRING("#define S second\n");
+    SEND_STRING("#define PB push_back\n");
+}
+
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
   // debug_enable=true;
   // debug_matrix=true;
   // debug_keyboard=true;
   // debug_mouse=true;
+  leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);
+  leader_map_key_sequence(leader_fj, 2, KC_F, KC_J);
+  leader_map_key_sequence(leader_fa, 2, KC_F, KC_A);
+  leader_map_key_sequence(leader_fe, 2, KC_F, KC_E);
+  leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
+  leader_map_key_sequence(leader_pp, 2, KC_P, KC_P);
+  leader_map_key_sequence(leader_be, 2, KC_B, KC_E);
+  leader_map_key_sequence(leader_mx, 2, KC_M, KC_X);
+  leader_map_key_sequence(leader_ds, 2, KC_D, KC_S);
+  leader_map_key_sequence(leader_i, 1, KC_I);
 }
 
+
+// https://docs.qmk.fm/features/leader_key
+// void leader_end_user(void) {
+//     if (leader_sequence_two_keys(KC_F, KC_I)) {
+//         SEND_STRING("for(int i=0; i<; i++)");
+//         // SEND_STRING("for(int i=0; i<; i++) {\n}" SEND_STRING(SS_TAP(X_UP));
+//         // for (int i = 0; i < 15; i++) SEND_STRING(SS_TAP(X_RIGHT));
+//     } else if (leader_sequence_two_keys(KC_F, KC_A)) {
+//         SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
+//         for (int i = 0; i < 14; i++) SEND_STRING(SS_TAP(X_RIGHT));
+//     } else if (leader_sequence_two_keys(KC_F, KC_E)) {
+//         SEND_STRING("ranges::for_each(, [](int& n) {});");
+//         for (int i = 0; i < 16; i++) SEND_STRING(SS_TAP(X_LEFT));
+//     }
+//         // iabbr <silent><buffer> for_each_print_ ranges::for_each(, [](const int& n) {cout << n;});cout<<endl;<esc>F(;a<C-R>=Eatchar()<CR>
+//         // iabbr <silent><buffer> print_range_ ranges::copy(x, ostream_iterator<int>(cout, " "));cout<<endl;<esc>Fxcw<C-R>=Eatchar()<CR>
+// }
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // If console is enabled, it will print the matrix position and status of each
   // key pressed
@@ -83,7 +154,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     } else {
       unregister_code(KC_GRV);
     }
-    return true;
+    return true;  // Let qmk process this further
   case CMD_TAB:
     if (record->event.pressed) {
       if (!is_cmd_tab_active) {
@@ -112,11 +183,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   //   }
   //   return false;
   default:
-    return true; // Process all other keycodes normally
+    return process_leader(keycode, record);
+    // return true; // Process all other keycodes normally
   }
 }
 
-void matrix_scan_user(void) { // The very important timer.
+// Runs in every iteration of main loop.
+void housekeeping_task_user(void) {
+    leader_task();
+}
+
+// Timer for cmd_grv.
+void matrix_scan_user(void) {
   if (is_cmd_grv_active) {
     if (timer_elapsed(cmd_grv_timer) > MAX_WAIT_MULTI_KEY) {
       unregister_code(KC_LGUI);
@@ -149,35 +227,6 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
   default:
     return false;
   }
-}
-
-// https://docs.qmk.fm/features/leader_key
-void leader_end_user(void) {
-    if (leader_sequence_two_keys(KC_F, KC_I)) {
-        SEND_STRING("for(int i=0; i<; i++) {\n}" SS_TAP(X_UP));
-        for (int i = 0; i < 15; i++) SEND_STRING(SS_TAP(X_RIGHT));
-    } else if (leader_sequence_two_keys(KC_F, KC_A)) {
-        SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
-        for (int i = 0; i < 14; i++) SEND_STRING(SS_TAP(X_RIGHT));
-    } else if (leader_sequence_two_keys(KC_F, KC_E)) {
-        SEND_STRING("ranges::for_each(, [](int& n) {});");
-        for (int i = 0; i < 16; i++) SEND_STRING(SS_TAP(X_LEFT));
-    }
-        // iabbr <silent><buffer> for_each_print_ ranges::for_each(, [](const int& n) {cout << n;});cout<<endl;<esc>F(;a<C-R>=Eatchar()<CR>
-        // iabbr <silent><buffer> print_range_ ranges::copy(x, ostream_iterator<int>(cout, " "));cout<<endl;<esc>Fxcw<C-R>=Eatchar()<CR>
-        // iabbr <silent><buffer> all_ a.begin(), a.end()<C-R>=Eatchar()<CR>
-        // iabbr <silent><buffer> max_element_ ranges::max_element(<C-R>=Eatchar()<CR>
-        // iabbr <silent><buffer> distance_ ranges::distance(<C-R>=Eatchar()<CR>
-
-
-        //         'typedef signed long long ll;',
-        //         'typedef vector<int> vi;',
-        //         'typedef vector<vector<int>> vii;',
-        //         'typedef pair<int,int> pi;',
-        //         'typedef vector<string> vs;',
-        //         '#define F first',
-        //         '#define S second',
-        //         '#define PB push_back',
 }
 
 #if 0

@@ -1,4 +1,5 @@
 #include "leader.h"
+#include <stdarg.h>
 
 #define LEADER_PER_KEY_TIMEOUT 1000
 #define LEADER_MAP_COUNT 100

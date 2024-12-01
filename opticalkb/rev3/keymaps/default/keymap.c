@@ -53,66 +53,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // void is31fl3731_all_led_on(uint8_t brightness_level);
 // void is31fl3731_all_led_off(void);
 
-void leader_fi(void) {
-    SEND_STRING("for(int i = 0; i < ; i++) {\n}" SS_TAP(X_UP));
-    for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
-}
-void leader_fj(void) {
-    SEND_STRING("for(int j = 0; j < ; j++) {\n}" SS_TAP(X_UP));
-    for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
-}
-void leader_fa(void) {
-    SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
-    for (int i = 0; i < 13; i++) SEND_STRING(SS_TAP(X_RIGHT));
-}
-void leader_fe(void) {
-    SEND_STRING("ranges::for_each(, [](int& n) {});");
-    for (int i = 0; i < 17; i++) SEND_STRING(SS_TAP(X_LEFT));
-}
-void leader_pr(void) {
-    SEND_STRING("ranges::for_each(, [](const int& n) {cout << n;});cout<<endl;");
-    for (int i = 0; i < 45; i++) SEND_STRING(SS_TAP(X_LEFT));
-}
-void leader_pp(void) {
-    SEND_STRING("ranges::copy(, ostream_iterator<int>(cout, \" \"));cout<<endl;");
-    for (int i = 0; i < 47; i++) SEND_STRING(SS_TAP(X_LEFT));
-}
-void leader_be(void) {
-    SEND_STRING("a.begin(), a.end()");
-}
-void leader_mx(void) {
-    SEND_STRING("ranges::max_element(");
-}
-void leader_ds(void) {
-    SEND_STRING("ranges::distance(");
-}
-void leader_i(void) {
-    SEND_STRING("typedef signed long long ll;\n");
-    SEND_STRING("typedef vector<int> vi;\n");
-    SEND_STRING("typedef vector<vector<int>> vii;\n");
-    SEND_STRING("typedef pair<int,int> pi;\n");
-    SEND_STRING("typedef vector<string> vs;\n");
-    SEND_STRING("#define F first\n");
-    SEND_STRING("#define S second\n");
-    SEND_STRING("#define PB push_back\n");
-}
-
 void keyboard_post_init_user(void) {
   // Customise these values to desired behaviour
   // debug_enable=true;
   // debug_matrix=true;
   // debug_keyboard=true;
   // debug_mouse=true;
-  leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);
-  leader_map_key_sequence(leader_fj, 2, KC_F, KC_J);
-  leader_map_key_sequence(leader_fa, 2, KC_F, KC_A);
-  leader_map_key_sequence(leader_fe, 2, KC_F, KC_E);
-  leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
-  leader_map_key_sequence(leader_pp, 2, KC_P, KC_P);
-  leader_map_key_sequence(leader_be, 2, KC_B, KC_E);
-  leader_map_key_sequence(leader_mx, 2, KC_M, KC_X);
-  leader_map_key_sequence(leader_ds, 2, KC_D, KC_S);
-  leader_map_key_sequence(leader_i, 1, KC_I);
 }
 
 

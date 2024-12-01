@@ -37,3 +37,4 @@ CONSOLE_ENABLE = no        # Console for debug
 CUSTOM_MATRIX = lite
 SRC += matrix.c
 SRC += leader.c
+SRC += leader_map.c

@@ -31,8 +31,8 @@ LED_MATRIX_ENABLE = no
 # LED_MATRIX_ENABLE = yes
 # LED_MATRIX_DRIVER = IS31FL3731
 
-CONSOLE_ENABLE = yes        # Console for debug
-# CONSOLE_ENABLE = no        # Console for debug
+# CONSOLE_ENABLE = yes        # Console for debug
+CONSOLE_ENABLE = no        # Console for debug
 
 CUSTOM_MATRIX = lite
 SRC += matrix.c

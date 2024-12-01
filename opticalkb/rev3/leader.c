@@ -55,34 +55,20 @@ bool process_leader(uint16_t keycode, keyrecord_t *record) {
                 }
                 if (!partial_match()) {
                     uint8_t full_match_idx = full_match();
-                    uprintf("full_match_idx %d\n", full_match_idx);
                     if (full_match_idx != LEADER_MAP_INVALID) {  // full match
                         (maps.operation[full_match_idx])();
                         leader_end();
                         return false;
                     } else {
-                        uprintf("partial match=no, full_match=no\n");
                         leader_end();
                         return true;
                     }
                 } else {  // partial match
-                    uprintf("partial match\n");
                     leader_reset_timer();
                     return false;
                 }
-            // } else {
-            //     uprintf("here4\n");
-            //     if (keycode == QK_LEADER) {
-            //         uprintf("QK_LEADER again, timer expired\n");
-            //         leader_start();
-            //         return false;
-            //     } else {
-            //         leader_end();
-            //         return true;
-            //     }
             }
         } else if (keycode == QK_LEADER) {
-            uprintf("QK_LEADER tapped\n");
             leader_start();
             return false;
         }
@@ -159,7 +145,6 @@ bool partial_match(void) {
         bool pmatch = true;
         uint8_t j;
         for (j = 0; j < 5; j++) {
-            uprintf("partial match leader %X KC %X \n", leader_sequence[j], kc[j]);
             if (leader_sequence[j] != 0) {
                 if (leader_sequence[j] != kc[j]) {
                     pmatch = false;

@@ -43,7 +43,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, DM_REC1, _______, DM_PLY1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_COMM, _______, _______, KC_MS_WH_UP,
         KC_AUDIO_MUTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_QUESTION, _______, KC_MS_WH_DOWN,
-        QK_BOOT, _______, KC_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, LALT(KC_BSPC), KC_END, KC_HOME, RCTL(KC_T), _______, BL_UP, BL_DOWN
+        QK_BOOT, _______, KC_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, RCTL(KC_T), _______, BL_UP, BL_DOWN
     )
 };
 
@@ -61,28 +61,11 @@ void keyboard_post_init_user(void) {
   // debug_mouse=true;
 }
 
-
-// https://docs.qmk.fm/features/leader_key
-// void leader_end_user(void) {
-//     if (leader_sequence_two_keys(KC_F, KC_I)) {
-//         SEND_STRING("for(int i=0; i<; i++)");
-//         // SEND_STRING("for(int i=0; i<; i++) {\n}" SEND_STRING(SS_TAP(X_UP));
-//         // for (int i = 0; i < 15; i++) SEND_STRING(SS_TAP(X_RIGHT));
-//     } else if (leader_sequence_two_keys(KC_F, KC_A)) {
-//         SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
-//         for (int i = 0; i < 14; i++) SEND_STRING(SS_TAP(X_RIGHT));
-//     } else if (leader_sequence_two_keys(KC_F, KC_E)) {
-//         SEND_STRING("ranges::for_each(, [](int& n) {});");
-//         for (int i = 0; i < 16; i++) SEND_STRING(SS_TAP(X_LEFT));
-//     }
-//         // iabbr <silent><buffer> for_each_print_ ranges::for_each(, [](const int& n) {cout << n;});cout<<endl;<esc>F(;a<C-R>=Eatchar()<CR>
-//         // iabbr <silent><buffer> print_range_ ranges::copy(x, ostream_iterator<int>(cout, " "));cout<<endl;<esc>Fxcw<C-R>=Eatchar()<CR>
-// }
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // If console is enabled, it will print the matrix position and status of each
   // key pressed
 #ifdef CONSOLE_ENABLE
-    uprintf("KL: kc: 0x%04X, col: %u, row: %u, pressed: %u, time: %u, interrupt: %u, count: %u\n",
+    uprintf("(giri) KL: kc: 0x%04X, col: %u, row: %u, pressed: %u, time: %u, interrupt: %u, count: %u\n",
             keycode, record->event.key.col, record->event.key.row,
             record->event.pressed, record->event.time, record->tap.interrupted,
             record->tap.count);

@@ -1,6 +1,6 @@
 #include "leader.h"
 
-// Vowels are avoided in map lhs, unless vowel refers to template
+// Rule of thumb: Vowels are avoided in map lhs, unless vowel refers to template
 // parameter (ex. vector<int> is vi).
 
 void leader_fi(void) {

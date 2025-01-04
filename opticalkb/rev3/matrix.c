@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: GPL-2.0-or-later
  */
 
-// #include "print.h"
+// #include "debug.h"  // has dprintf
 #include "quantum.h"
 #include "wait.h"
 
@@ -18,6 +18,11 @@
 #ifndef WAIT_AFTER_COL_READ
 #define WAIT_AFTER_COL_READ 500
 #endif
+
+// If scanning is paused for extended period (like when send_string()) spurious
+// keypresses get generated. This is possibly an artifact of phototransistor.
+// In this case, ignore the keystrokes (time in millisec).
+#define MAX_IDLE_TIME 20
 
 // #define DEBOUNCE_VAL 40  // 5 works, when WAIT_AFTER_COL_READ=0
 #define DEBOUNCE_VAL 5
@@ -71,11 +76,21 @@ void matrix_init_custom(void)
 //     return mrow;
 // }
 
+systime_t get_sys_time(void)
+{
+    systime_t t;
+    chSysLockFromISR();
+    t = chVTGetSystemTimeX();
+    chSysUnlockFromISR();
+    return t;
+}
+
 uint8_t matrix_scan_custom(matrix_row_t current_matrix[])
 {
     static uint16_t debounce[MATRIX_ROWS][MATRIX_COLS] = { 0 };
     static matrix_row_t mask[MATRIX_ROWS] = { 0 };
     static bool debouncing = false;
+    static systime_t last_scan = 0;
     matrix_row_t scan_matrix[MATRIX_ROWS] = { 0 };
 
     for (uint8_t row = 0; row < ROW_COUNT; row++) {
@@ -98,6 +113,19 @@ uint8_t matrix_scan_custom(matrix_row_t current_matrix[])
 
     wait_us(WAIT_AFTER_COL_READ);
 
+    /* Discard state if scan has not occured in a long time (ex. after
+     * send_string()). This avoid spurious characters. */
+    if (last_scan != 0 && chTimeI2MS(chVTTimeElapsedSinceX(last_scan)) >= MAX_IDLE_TIME) {
+        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+            current_matrix[row] = 0;
+            mask[row] = 0;
+        }
+        memset(debounce, 0, sizeof(debounce));
+        last_scan = get_sys_time();
+        return 0;
+    }
+    last_scan = get_sys_time();
+
     /* Decrement debounce count */
     if (debouncing) {
         debouncing = false;
@@ -107,7 +135,7 @@ uint8_t matrix_scan_custom(matrix_row_t current_matrix[])
                     debounce[row][col] -= 1;
                     debouncing = true;
                     if (debounce[row][col] == 0) {
-                        mask[row] &= ~(1 << col);
+                        mask[row] &= ~(1 << col);  // remove mask
                     }
                 }
             }

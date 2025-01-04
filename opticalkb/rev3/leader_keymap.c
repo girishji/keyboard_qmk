@@ -4,20 +4,23 @@
 // parameter (ex. vector<int> is vi).
 
 void leader_fi(void) {
-    SEND_STRING("for(int i = 0; i < ; i++) {\n}" SS_TAP(X_UP));
+    SEND_STRING("for (int i = 0; i < ; i++) {\n}" SS_TAP(X_UP));
     for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 void leader_fj(void) {
-    SEND_STRING("for(int j = 0; j < ; j++) {\n}" SS_TAP(X_UP));
+    SEND_STRING("for (int j = 0; j < ; j++) {\n}" SS_TAP(X_UP));
     for (int i = 0; i < 18; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 void leader_fa(void) {
-    SEND_STRING("for(auto& x : ) {\n}" SS_TAP(X_UP));
+    SEND_STRING("for (auto& x : ) {\n}" SS_TAP(X_UP));
     for (int i = 0; i < 13; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 void leader_ft(void) {
-    SEND_STRING("for(auto it=.begin(); it!=.end(); it++) {\n}" SS_TAP(X_UP));
-    for (int i = 0; i < 11; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    SEND_STRING("for (auto it = .begin(); it != .end(); it++) {\n}" SS_TAP(X_UP));
+    for (int i = 0; i < 13; i++) SEND_STRING(SS_TAP(X_RIGHT));
+}
+void leader_fm(void) {
+    SEND_STRING("for (const auto& [key, val] : map) {");
 }
 void leader_fe(void) {
     SEND_STRING("ranges::for_each(, [](int& n) {});");
@@ -55,32 +58,54 @@ void leader_vs(void) {
 void leader_pi(void) {
     SEND_STRING("pair<int,int> ");
 }
-void leader_fr(void) {
-    SEND_STRING("first");
-}
-void leader_sc(void) {
-    SEND_STRING("second");
-}
-void leader_pb(void) {
-    SEND_STRING("push_back(");
-}
 void leader_i(void) {
-    SEND_STRING("typedef signed long long ll;\n");
-    SEND_STRING("typedef vector<int> vi;\n");
-    SEND_STRING("typedef vector<vector<int>> vii;\n");
-    SEND_STRING("typedef pair<int,int> pi;\n");
-    SEND_STRING("typedef vector<string> vs;\n");
+    SEND_STRING("using namespace string_view_literals;\n");
+    SEND_STRING("using i64 = int64_t;\n");
+    SEND_STRING("namespace rg = ranges;\n");
+    SEND_STRING("namespace rv = ranges::views;\n");
     SEND_STRING("#define F first\n");
     SEND_STRING("#define S second\n");
     SEND_STRING("#define PB push_back\n");
 }
-
+void leader_mi(void) {
+    SEND_STRING("numeric_limits<int>::max();");
+}
+void leader_leftleft(void) {
+    SEND_STRING("ostream& operator<<(ostream& os, const pair<int, int>& p) {\n");
+    SEND_STRING("os << '(' << p.first << \", \" << p.second << ')'; return os;\n}\n");
+}
+// Conversions
+void leader_cic(void) {
+    SEND_STRING("'0' + 5");
+}
+void leader_cci(void) {
+    SEND_STRING("ch - '0'");
+}
+void leader_cib(void) {
+    SEND_STRING("bitset<32> binary(num); // num is int");
+}
+void leader_cis(void) {
+    SEND_STRING("string str = to_string(num); // num is int");
+}
+void leader_csi(void) {
+    SEND_STRING("stoi(str)");
+}
+void leader_csu(void) {
+    SEND_STRING("stoull(str)");
+}
+void leader_csc(void) {
+    SEND_STRING("while (auto ch : str) OR vector<char>(s.begin(), s.end())");
+}
+void leader_ccs(void) {
+    SEND_STRING("s += ch; string(1, ch); s.push_back(ch);");
+}
 void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);
     leader_map_key_sequence(leader_fj, 2, KC_F, KC_J);
     leader_map_key_sequence(leader_fa, 2, KC_F, KC_A);
     leader_map_key_sequence(leader_ft, 2, KC_F, KC_T);
     leader_map_key_sequence(leader_fe, 2, KC_F, KC_E);
+    leader_map_key_sequence(leader_fm, 2, KC_F, KC_M);
     leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
     leader_map_key_sequence(leader_pp, 2, KC_P, KC_P);
     leader_map_key_sequence(leader_be, 2, KC_B, KC_E);
@@ -92,7 +117,14 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_vv, 2, KC_V, KC_V);
     leader_map_key_sequence(leader_vs, 2, KC_V, KC_S);
     leader_map_key_sequence(leader_pi, 2, KC_P, KC_I);
-    leader_map_key_sequence(leader_fr, 2, KC_F, KC_R);
-    leader_map_key_sequence(leader_sc, 2, KC_S, KC_C);
-    leader_map_key_sequence(leader_pb, 2, KC_P, KC_B);
+    leader_map_key_sequence(leader_mi, 2, KC_M, KC_I);
+    leader_map_key_sequence(leader_leftleft, 2, KC_LEFT, KC_LEFT);
+    leader_map_key_sequence(leader_cic, 3, KC_C, KC_I, KC_C);
+    leader_map_key_sequence(leader_cci, 3, KC_C, KC_C, KC_I);
+    leader_map_key_sequence(leader_cib, 3, KC_C, KC_I, KC_B);
+    leader_map_key_sequence(leader_cis, 3, KC_C, KC_I, KC_S);
+    leader_map_key_sequence(leader_csi, 3, KC_C, KC_S, KC_I);
+    leader_map_key_sequence(leader_csu, 3, KC_C, KC_S, KC_U);
+    leader_map_key_sequence(leader_csc, 3, KC_C, KC_S, KC_C);
+    leader_map_key_sequence(leader_ccs, 3, KC_C, KC_C, KC_S);
 }

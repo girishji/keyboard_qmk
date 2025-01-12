@@ -6,33 +6,33 @@
 
 void leader_fi(void) {
     SEND_STRING("for (int i = 0; i < (int); i++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fj(void) {
     SEND_STRING("for (int j = 0; j < (int); j++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fk(void) {
     SEND_STRING("for (int k = 0; k < (int); k++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fa(void) {
-    SEND_STRING("for (auto& x : ) {\n" SS_TAP(X_UP));
+    SEND_STRING("for (auto&  : ) {\n" SS_TAP(X_UP));
     for (int i = 0; i < 11; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_ft(void) {
     SEND_STRING("for (auto it = .begin(); it != .end(); it++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 11; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 15; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fm(void) {
     SEND_STRING("// map | views::values, map | views::keys\n");
     SEND_STRING("for (const auto& [key, val] : ) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 26; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 30; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fe(void) {
@@ -45,21 +45,16 @@ void leader_pr(void) {
     SEND_STRING("for (const auto& t : ) { cout << t << \" \"; }; cout << endl;");
     for (int i = 0; i < 38; i++) SEND_STRING(SS_TAP(X_LEFT));
 }
-// void leader_pp(void) {
-//     SEND_STRING("ranges::copy(, ostream_iterator<int>(cout, \" \"));cout<<endl;");
-//     for (int i = 0; i < 47; i++) SEND_STRING(SS_TAP(X_LEFT));
-// }
+
+void leader_p2(void) {
+    SEND_STRING("ranges::copy(, ostream_iterator<int>(cout, \" \"));cout<<endl;");
+    for (int i = 0; i < 47; i++) SEND_STRING(SS_TAP(X_LEFT));
+}
 
 void leader_be(void) {
     SEND_STRING(".begin(), .end()");
     for (int i = 0; i < 16; i++) SEND_STRING(SS_TAP(X_LEFT));
 }
-// void leader_ds(void) {
-//     SEND_STRING("ranges::distance(");
-// }
-// void leader_ll(void) {
-//     SEND_STRING("signed long long ");
-// }
 
 void leader_vi(void) {
     SEND_STRING("vector<int> ");
@@ -112,7 +107,7 @@ void leader_mi(void) {
     SEND_STRING("numeric_limits<int>::max()");
 }
 
-void leader_leftleft(void) {
+void leader_ltlt(void) {
     const char *str =
     "template<typename Os, typename V>\n"
     "Os& operator<<(Os& os, const V& v) {\n"
@@ -160,14 +155,14 @@ void leader_tp(void) {
     "tuple<int, string, double> myTuple = {42, \"World\", 2.718};\n"
     "auto myTuple = make_tuple(42, \"World\", 2.718);\n"
     "auto [a, b, c] = myTuple;\n"
-    "cout << get<0>(myTuple) << endl; // 42 \n"
+    "cout << get<0>(myTuple) << endl; // 42\n"
     ;
     SEND_STRING(str);
 }
 
 // Algorithms
 
-void leader_ascln(void) {
+void leader_a1(void) {
     const char *str =
         "// ast set_intersection set_union set_difference includes\n"
         "// ahp make_heap push_heap pop_heap is_heap sort_heap\n"
@@ -189,7 +184,7 @@ void leader_ascln(void) {
     SEND_STRING(str);
 }
 
-void leader_asclnscln(void) {
+void leader_a2(void) {
     const char *str =
         "// acn ranges::contains ranges::contains_subrange\n"
         "// afn find find_if find_if_not find_last find_last_if find_last_if_not (see af2)\n"
@@ -212,6 +207,11 @@ void leader_asclnscln(void) {
         "// ab2 notes on comparison function for sorting, binary_search, and partitioning\n"
         ;
     SEND_STRING(str);
+}
+
+void leader_ascln(void) {
+    leader_a1();
+    leader_a2();
 }
 
 void leader_acv(void) { // Conversions
@@ -2014,17 +2014,15 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_fe, 2, KC_F, KC_E);
     leader_map_key_sequence(leader_fm, 2, KC_F, KC_M);
     leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
-    // leader_map_key_sequence(leader_pp, 2, KC_P, KC_P);
+    leader_map_key_sequence(leader_p2, 2, KC_P, KC_2);
     leader_map_key_sequence(leader_be, 2, KC_B, KC_E);
-    // leader_map_key_sequence(leader_ds, 2, KC_D, KC_S);
     leader_map_key_sequence(leader_i, 1, KC_I);
-    // leader_map_key_sequence(leader_ll, 2, KC_L, KC_L);
     leader_map_key_sequence(leader_vi, 2, KC_V, KC_I);
     leader_map_key_sequence(leader_vv, 2, KC_V, KC_V);
     leader_map_key_sequence(leader_vs, 2, KC_V, KC_S);
     leader_map_key_sequence(leader_pi, 2, KC_P, KC_I);
     leader_map_key_sequence(leader_mi, 2, KC_M, KC_I);
-    leader_map_key_sequence(leader_leftleft, 2, KC_LEFT, KC_LEFT);
+    leader_map_key_sequence(leader_ltlt, 2, KC_LT, KC_LT); // KC_LT is '<'
     leader_map_key_sequence(leader_fn, 2, KC_F, KC_N);
     leader_map_key_sequence(leader_rg, 2, KC_R, KC_G);
     leader_map_key_sequence(leader_rv, 2, KC_R, KC_V);
@@ -2033,7 +2031,8 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_tp, 2, KC_T, KC_P);
     // Algorithms
     leader_map_key_sequence(leader_ascln, 2, KC_A, KC_SCLN);
-    leader_map_key_sequence(leader_asclnscln, 3, KC_A, KC_SCLN, KC_SCLN);
+    leader_map_key_sequence(leader_a1,  2, KC_A, KC_1);
+    leader_map_key_sequence(leader_a2,  2, KC_A, KC_2);
     leader_map_key_sequence(leader_acv, 3, KC_C, KC_C, KC_V);
     leader_map_key_sequence(leader_acn, 3, KC_C, KC_C, KC_N);
     leader_map_key_sequence(leader_ast, 3, KC_A, KC_S, KC_T);

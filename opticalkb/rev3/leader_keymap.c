@@ -1997,15 +1997,13 @@ void leader_dm8(void) {
 // }
 
 // Set marks so that block can be deleted later
-// void (*wrap(void (*func)(void)))(void) {
+// void wrap(void (*func)(void)) {
 //     if (func != NULL) {
 //         SEND_STRING(SS_TAP(X_ESC) "mxi");
 //         func();
 //         SEND_STRING(SS_TAP(X_ESC) "myi");
 //     }
-//     return func;
 // }
-
 
 void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);

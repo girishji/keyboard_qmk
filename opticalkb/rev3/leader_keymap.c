@@ -973,6 +973,7 @@ void leader_dscln(void) {
         "// ddq deque\n"
         "// dts set\n"
         "// dmp map\n"
+        "// dmf common_mathematics_functions\n"
         ;
     SEND_STRING(str);
 }
@@ -995,7 +996,6 @@ void leader_dtm(void) { // Templates
     ;
     SEND_STRING(str);
 }
-
 
 void leader_dfo(void) { // function object
     const char *str =
@@ -1990,6 +1990,28 @@ void leader_dm8(void) {
     SEND_STRING(str);
 }
 
+void leader_dmf(void) {  // mathematic functions
+    const char *str =
+    "abs(int) labs llabs abs(float) fabs fabsf fabsl\n"
+    "div(int) ldiv lldiv -> computes quotient and remainder of integer division\n"
+    "exp expf expl -> returns e raised to the given power x\n"
+    "exp2 exp2f exp2l -> returns 2 raised to the given power 2\n"
+    "log logf logl -> computes natural (base e) logarithm ln(x)\n"
+    "log10 log10f log10l -> computes common (base 10) logarithm (log10x)\n"
+    "log2 log2f log2l -> base 2 logarithm of the given number (log2x\n"
+    "pow powf powl -> raises a number to the given power (x ** y)\n"
+    "sqrt sqrtf sqrtl -> computes square root (√x)\n"
+    "cbrt cbrtf cbrtl -> computes cube root (3√x)\n"
+    "hypot hypotf hypotl -> computes hypotenuse √x2+y2 and √x2+y2+z2\n"
+    "ceil ceilf ceill -> nearest integer not less than the given value\n"
+    "floor floorf floorl -> nearest integer not greater than the given value\n"
+    "trunc truncf truncl -> nearest integer not greater in magnitude than the given value\n"
+    "round roundf roundll roundl roundf lroundl llround llroundf llroundl\n"
+    "  -> nearest integer, rounding away from zero in halfway cases\n"
+    ;
+    SEND_STRING(str);
+}
+
 // Undo
 // void leader_dscln(void) {
 //     SEND_STRING(SS_TAP(X_ESC) "`xv`yd");
@@ -2105,4 +2127,5 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_dm6, 3, KC_D, KC_M, KC_6);
     leader_map_key_sequence(leader_dm7, 3, KC_D, KC_M, KC_7);
     leader_map_key_sequence(leader_dm8, 3, KC_D, KC_M, KC_8);
+    leader_map_key_sequence(leader_dmf, 3, KC_D, KC_M, KC_F);
 }

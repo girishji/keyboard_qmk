@@ -1,27 +1,27 @@
 #include "leader.h"
 
-// Rule of thumb: Vowels are avoided in map lhs, unless vowel refers to template
-// parameter (ex. vector<int> is vi).
-
+// Note:
+// - Vowels are avoided in map lhs, unless vowel refers to template parameter (ex. vector<int> is vi).
+// - `cat > /dev/null/` and you can invoke these keymaps
 
 void leader_fi(void) {
     SEND_STRING("for (int i = 0; i < (int); i++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fj(void) {
     SEND_STRING("for (int j = 0; j < (int); j++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fk(void) {
     SEND_STRING("for (int k = 0; k < (int); k++) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 20; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 21; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_fa(void) {
     SEND_STRING("for (auto&  : ) {\n" SS_TAP(X_UP));
-    for (int i = 0; i < 11; i++) SEND_STRING(SS_TAP(X_RIGHT));
+    for (int i = 0; i < 7; i++) SEND_STRING(SS_TAP(X_RIGHT));
 }
 
 void leader_ft(void) {
@@ -90,7 +90,7 @@ void leader_cscln(void) {
     for (int i = 0; i < 9; i++) SEND_STRING(SS_TAP(X_LEFT));
 }
 
-void leader_i(void) {
+void leader_iscln(void) {
     const char *str =
     "using namespace string_view_literals;\n"
     "using i64 = int64_t;\n"
@@ -146,16 +146,6 @@ void leader_op(void) {
     "}\n"
     "int value = maybeInt1.value(); // Throws if no value\n"
     "int safeValue = maybeInt1.value_or(0); // Safe access with default\n"
-    ;
-    SEND_STRING(str);
-}
-
-void leader_tp(void) {
-    const char *str =
-    "tuple<int, string, double> myTuple = {42, \"World\", 2.718};\n"
-    "auto myTuple = make_tuple(42, \"World\", 2.718);\n"
-    "auto [a, b, c] = myTuple;\n"
-    "cout << get<0>(myTuple) << endl; // 42\n"
     ;
     SEND_STRING(str);
 }
@@ -895,6 +885,7 @@ void leader_abs(void) { // binary search
     "auto upper = ranges::upper_bound(data, 4);\n"
     "// lower points to first 4, upper to last 4\n"
     "//\n"
+    "// Range must be SORTED for equal_range to work\n"
     "// std::pair<ForwardIt, ForwardIt> equal_range( ForwardIt first, ForwardIt last,\n"
     "//                   const T& value, Compare comp );\n"
     "// constexpr ranges::subrange<I> equal_range( I first, S last, const T& value,\n"
@@ -974,6 +965,7 @@ void leader_dscln(void) {
         "// dts set\n"
         "// dmp map\n"
         "// dmf common_mathematics_functions\n"
+        "// dtp tuple\n"
         ;
     SEND_STRING(str);
 }
@@ -1261,6 +1253,8 @@ void leader_ds1(void) { // string
 
 void leader_ds4(void) { // string
     const char *str =
+    "// If none of the characters in the given character\n"
+    "// sequence is present in the range, npos will be returned.\n"
     "// size_type find( const basic_string& str, size_type pos = 0 ) const;\n"
     "// size_type find( const CharT* s, size_type pos, size_type count ) const;\n"
     "//         count 	length of substring to search for\n"
@@ -1990,6 +1984,16 @@ void leader_dm8(void) {
     SEND_STRING(str);
 }
 
+void leader_dtp(void) {
+    const char *str =
+    "tuple<int, string, double> myTuple = {42, \"World\", 2.718};\n"
+    "auto myTuple = make_tuple(42, \"World\", 2.718);\n"
+    "auto [a, b, c] = myTuple;\n"
+    "cout << get<0>(myTuple) << endl; // 42\n"
+    ;
+    SEND_STRING(str);
+}
+
 void leader_dmf(void) {  // mathematic functions
     const char *str =
     "abs(int) labs llabs abs(float) fabs fabsf fabsl\n"
@@ -2038,7 +2042,7 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_pr, 2, KC_P, KC_R);
     leader_map_key_sequence(leader_p2, 2, KC_P, KC_2);
     leader_map_key_sequence(leader_be, 2, KC_B, KC_E);
-    leader_map_key_sequence(leader_i, 1, KC_I);
+    leader_map_key_sequence(leader_iscln, 2, KC_I, KC_SCLN);
     leader_map_key_sequence(leader_vi, 2, KC_V, KC_I);
     leader_map_key_sequence(leader_vv, 2, KC_V, KC_V);
     leader_map_key_sequence(leader_vs, 2, KC_V, KC_S);
@@ -2050,7 +2054,6 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_rv, 2, KC_R, KC_V);
     leader_map_key_sequence(leader_cscln, 2, KC_C, KC_SCLN);
     leader_map_key_sequence(leader_op, 2, KC_O, KC_P);
-    leader_map_key_sequence(leader_tp, 2, KC_T, KC_P);
     // Algorithms
     leader_map_key_sequence(leader_ascln, 2, KC_A, KC_SCLN);
     leader_map_key_sequence(leader_a1,  2, KC_A, KC_1);
@@ -2098,7 +2101,7 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_dv0, 3, KC_D, KC_V, KC_0);
     leader_map_key_sequence(leader_dv1, 3, KC_D, KC_V, KC_1);
     leader_map_key_sequence(leader_dv5, 3, KC_D, KC_V, KC_5);
-    leader_map_key_sequence(leader_dv6, 3, KC_D, KC_S, KC_6);
+    leader_map_key_sequence(leader_dv6, 3, KC_D, KC_V, KC_6);
     leader_map_key_sequence(leader_dst, 3, KC_D, KC_S, KC_T);
     leader_map_key_sequence(leader_ds0, 3, KC_D, KC_S, KC_0);
     leader_map_key_sequence(leader_ds1, 3, KC_D, KC_S, KC_1);
@@ -2128,4 +2131,5 @@ void keyboard_pre_init_user(void) {
     leader_map_key_sequence(leader_dm7, 3, KC_D, KC_M, KC_7);
     leader_map_key_sequence(leader_dm8, 3, KC_D, KC_M, KC_8);
     leader_map_key_sequence(leader_dmf, 3, KC_D, KC_M, KC_F);
+    leader_map_key_sequence(leader_dtp, 3, KC_D, KC_T, KC_P);
 }

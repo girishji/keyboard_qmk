@@ -9,6 +9,10 @@ uint16_t cmd_grv_timer = 0;
 bool is_cmd_tab_active = false;
 uint16_t cmd_tab_timer = 0;
 
+bool fn_layer_on = false;
+bool key_pressed_in_fn_layer = false;
+uint16_t fn_ctrl_w_timer = 0;
+
 const uint16_t MAX_WAIT_MULTI_KEY = 650;
 
 bool led_matrix_on = true;
@@ -18,6 +22,7 @@ bool led_matrix_on = true;
 enum custom_keycodes {
   CMD_GRV = SAFE_RANGE,
   CMD_TAB,
+  FN_or_CTRL_W,
   UP_DIR,
   LED_MATRIX_TOGGLE
 };
@@ -36,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
         QK_LEADER, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
-        CMD_GRV, OSM(MOD_LALT), KC_BTN1, OSL(_FN), OSM(MOD_LGUI), KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, RCTL(KC_W), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
+        CMD_GRV, OSM(MOD_LALT), KC_BTN1, FN_or_CTRL_W, OSM(MOD_LGUI), KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
@@ -71,6 +76,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             record->tap.count);
 #endif
 
+  if (fn_layer_on && record->event.pressed) {
+    key_pressed_in_fn_layer = true;
+  }
   switch (keycode) {
   case CMD_GRV:
     if (record->event.pressed) {
@@ -96,6 +104,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_TAB);
     }
     return true;
+  case FN_or_CTRL_W:
+    if (record->event.pressed) {
+      layer_on(_FN);
+      fn_layer_on = true;
+      fn_ctrl_w_timer = timer_read();
+    } else {
+      layer_off(_FN);
+      fn_layer_on = false;
+      if (!key_pressed_in_fn_layer && timer_elapsed(fn_ctrl_w_timer) < 1000) {
+        SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_W) SS_UP(X_LCTL));
+      }
+      key_pressed_in_fn_layer = false;
+    }
+    return false;
   case UP_DIR:
     if (record->event.pressed) {
       SEND_STRING("../");
@@ -129,7 +151,8 @@ void matrix_scan_user(void) {
       unregister_code(KC_LGUI);
       is_cmd_grv_active = false;
     }
-  } else if (is_cmd_tab_active) {
+  }
+  if (is_cmd_tab_active) {
     if (timer_elapsed(cmd_tab_timer) > MAX_WAIT_MULTI_KEY) {
       unregister_code(KC_LGUI);
       is_cmd_tab_active = false;
@@ -206,3 +229,5 @@ led_config_t g_led_config = { {
   4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
 } };
 #endif
+
+// vim:ts=2:sts=2:sw=2:et:ai:

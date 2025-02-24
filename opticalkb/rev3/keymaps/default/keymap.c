@@ -24,6 +24,14 @@ enum custom_keycodes {
   CMD_TAB,
   FN_or_CTRL_W,
   UP_DIR,
+  CTRL_W_O,
+  CTRL_W_W,
+  CTRL_W_H,
+  CTRL_W_J,
+  CTRL_W_K,
+  CTRL_W_L,
+  CTRL_W_C,
+  CTRL_W_N,
   LED_MATRIX_TOGGLE
 };
 // clang-format on
@@ -34,6 +42,7 @@ enum layer_names { _BASE, _FN };
 // clang-format off
 // Mod_Tap feature causes delay and erratic behaviour. Removing it from
 // important keys like Esc and PgDn
+// KC_MS_WH_UP/DOWN is mouse wheel up/down
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
@@ -45,9 +54,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
-        _______, DM_REC1, _______, DM_PLY1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, KC_COMM, _______, _______, KC_MS_WH_UP,
-        KC_AUDIO_MUTE, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_QUESTION, _______, KC_MS_WH_DOWN,
+        _______, _______, CTRL_W_W, _______, _______, _______, _______, _______, _______, CTRL_W_O, _______, _______, _______, _______,
+        _______, _______, _______, _______, _______, _______, _______, CTRL_W_H, CTRL_W_J, CTRL_W_K, CTRL_W_L, _______, _______, _______, KC_MS_WH_UP,
+        KC_AUDIO_MUTE, _______, _______, _______, CTRL_W_C, _______, _______, CTRL_W_N, _______, _______, _______, KC_QUESTION, _______, KC_MS_WH_DOWN,
         QK_BOOT, _______, KC_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, KC_KB_MUTE, _______, BL_UP, BL_DOWN
     )
 };
@@ -104,6 +113,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_TAB);
     }
     return true;
+  case CTRL_W_O:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "o");
+    }
+    return false;
+  case CTRL_W_W:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "w");
+    }
+    return false;
+  case CTRL_W_H:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "h");
+    }
+    return false;
+  case CTRL_W_J:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "j");
+    }
+    return false;
+  case CTRL_W_K:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "k");
+    }
+    return false;
+  case CTRL_W_L:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "l");
+    }
+    return false;
+  case CTRL_W_C:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "c");
+    }
+    return false;
+  case CTRL_W_N:
+    if (record->event.pressed) {
+      SEND_STRING(SS_LCTL("w") "n");
+    }
+    return false;
   case FN_or_CTRL_W:
     if (record->event.pressed) {
       layer_on(_FN);

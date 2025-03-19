@@ -13,6 +13,10 @@ bool fn_layer_on = false;
 bool key_pressed_in_fn_layer = false;
 uint16_t fn_ctrl_w_timer = 0;
 
+bool cmd_key_on = false;
+bool key_pressed_in_cmd_mode = false;
+uint16_t cmd_ctrl_w_timer = 0;
+
 const uint16_t MAX_WAIT_MULTI_KEY = 650;
 
 bool led_matrix_on = true;
@@ -23,6 +27,7 @@ enum custom_keycodes {
   CMD_GRV = SAFE_RANGE,
   CMD_TAB,
   FN_or_CTRL_W,
+  CMD_or_CTRL_W,
   UP_DIR,
   CTRL_W_O,
   CTRL_W_W,
@@ -43,6 +48,9 @@ enum layer_names { _BASE, _FN };
 // Mod_Tap feature causes delay and erratic behaviour. Removing it from
 // important keys like Esc and PgDn
 // KC_MS_WH_UP/DOWN is mouse wheel up/down
+// LT(_FN, key) -> layer tap
+// MT(MOD_LCTL, key) -> mod tap
+// LCTL(KC_W)
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
@@ -50,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
         QK_LEADER, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
-        CMD_GRV, OSM(MOD_LALT), KC_BTN1, FN_or_CTRL_W, OSM(MOD_LGUI), KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
+        CMD_GRV, OSM(MOD_LALT), KC_BTN1, OSM(MOD_LGUI), FN_or_CTRL_W, KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, KC_AUDIO_VOL_DOWN, KC_AUDIO_VOL_UP,
@@ -87,6 +95,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
   if (fn_layer_on && record->event.pressed) {
     key_pressed_in_fn_layer = true;
+  }
+  if (cmd_key_on && record->event.pressed) {
+    key_pressed_in_cmd_mode = true;
   }
   switch (keycode) {
   case CMD_GRV:
@@ -165,6 +176,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_W) SS_UP(X_LCTL));
       }
       key_pressed_in_fn_layer = false;
+    }
+    return false;
+  case CMD_or_CTRL_W:
+    if (record->event.pressed) {
+      register_code(KC_LGUI);
+      cmd_key_on = true;
+      cmd_ctrl_w_timer = timer_read();
+    } else {
+      unregister_code(KC_LGUI);
+      cmd_key_on = false;
+      if (!key_pressed_in_cmd_mode && timer_elapsed(cmd_ctrl_w_timer) < 1000) {
+        SEND_STRING(SS_DOWN(X_LCTL) SS_TAP(X_W) SS_UP(X_LCTL));
+      }
+      key_pressed_in_cmd_mode = false;
     }
     return false;
   case UP_DIR:

@@ -7,14 +7,12 @@
 #include <math.h>
 #include <ch.h>
 #include <hal.h>
+#include "gpio.h"
 #include "print.h"
 
-// #define RP_I2C0_SDA_PIN GP16
-// #define RP_I2C0_SCL_PIN GP17
 #define RP_I2C0_SDA_PIN GP0
 #define RP_I2C0_SCL_PIN GP1
-/* In ChibiOS I2CD1 corresponds to I2C0 driver of rp2040 */
-#define I2C_DRIVER I2CD1
+#define I2C_DRIVER I2CD0
 #define IS31FL3731_I2C_ADDRESS_DEFAULT 0x74
 #define I2C_TIMEOUT_MS 100
 

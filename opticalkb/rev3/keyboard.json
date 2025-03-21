@@ -7,7 +7,7 @@
     "usb": {
         "vid": "0xFEFD",
         "pid": "0x5303",
-        "device_version": "1.0.0" 
+        "device_version": "1.0.0"
     },
     "layouts": {
         "LAYOUT": {

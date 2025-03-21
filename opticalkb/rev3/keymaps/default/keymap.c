@@ -72,8 +72,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-// void is31fl3731_all_led_on(uint8_t brightness_level);
-// void is31fl3731_all_led_off(void);
+void is31fl3731_all_led_on(uint8_t brightness_level);
+void is31fl3731_all_led_off(void);
 
 void keyboard_post_init_user(void) {
   // debug_enable=true;  // enable this first, in order for others to work
@@ -197,16 +197,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       SEND_STRING("../");
     }
     return false;
-  // case LED_MATRIX_TOGGLE:
-  //   if (record->event.pressed) {
-  //     if (led_matrix_on) {
-  //       is31fl3731_all_led_off();
-  //     } else {
-  //       is31fl3731_all_led_on(25);
-  //     }
-  //     led_matrix_on = !led_matrix_on;
-  //   }
-  //   return false;
+  case LED_MATRIX_TOGGLE:
+    if (record->event.pressed) {
+      if (led_matrix_on) {
+        is31fl3731_all_led_off();
+      } else {
+        is31fl3731_all_led_on(25);
+      }
+      led_matrix_on = !led_matrix_on;
+    }
+    return false;
   default:
     return process_leader(keycode, record);
     // return true; // Process all other keycodes normally

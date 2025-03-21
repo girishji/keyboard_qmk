@@ -62,8 +62,8 @@ void matrix_init_custom(void)
         }
     }
 
-    // is31fl3731_init();
-    // is31fl3731_all_led_on(80); // % brightness
+    is31fl3731_init();
+    is31fl3731_all_led_on(80); // % brightness
 }
 
 // static inline matrix_row_t get_mask(uint16_t db[])

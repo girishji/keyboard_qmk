@@ -27,9 +27,9 @@ CAPS_WORD_ENABLE = yes      # Enable current word being typed to be all caps
 
 OPT_DEFS += -DHAL_USE_I2C=TRUE
 LED_MATRIX_ENABLE = no
-# SRC += is31fl3731.c
+SRC += is31fl3731.c
 # LED_MATRIX_ENABLE = yes
-# LED_MATRIX_DRIVER = IS31FL3731
+# LED_MATRIX_DRIVER = is31fl3731
 
 # CONSOLE_ENABLE = yes        # Console for debug
 CONSOLE_ENABLE = no        # Console for debug

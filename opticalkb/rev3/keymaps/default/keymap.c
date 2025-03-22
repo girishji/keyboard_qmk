@@ -202,7 +202,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (led_matrix_on) {
         is31fl3731_all_led_off();
       } else {
-        is31fl3731_all_led_on(25);
+        is31fl3731_all_led_on(10);
       }
       led_matrix_on = !led_matrix_on;
     }

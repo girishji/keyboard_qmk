@@ -131,7 +131,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
       // Check if LGUI (Command) is already held
       if (get_mods() & MOD_MASK_GUI) {
-        tap_code16(LCTL(KC_PGDN));  // Command is held → send Ctrl Page Down
+        tap_code16(LCTL(KC_PGUP));  // Command is held → send Ctrl Page Up
       } else {
         // Command is NOT held → send LGUI + LEFT
         tap_code16(LGUI(KC_LEFT));
@@ -142,7 +142,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
       // Check if LGUI (Command) is already held
       if (get_mods() & MOD_MASK_GUI) {
-        tap_code16(LCTL(KC_PGUP));  // Command is held → send Ctrl Page Up
+        tap_code16(LCTL(KC_PGDN));  // Command is held → send Ctrl Page Down
       } else {
         // Command is NOT held → send LGUI + LEFT
         tap_code16(LGUI(KC_RIGHT));

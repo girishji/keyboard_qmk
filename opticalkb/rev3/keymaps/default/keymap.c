@@ -29,7 +29,8 @@ enum custom_keycodes {
   CMD_TAB,
   FN_or_CTRL_W,
   CMD_or_CTRL_W,
-  UP_DIR,
+  GUI_LEFT_or_PGDN,
+  GUI_RIGHT_or_PGUP,
   CTRL_W_O,
   CTRL_W_W,
   CTRL_W_H,
@@ -38,6 +39,7 @@ enum custom_keycodes {
   CTRL_W_L,
   CTRL_W_C,
   CTRL_W_N,
+  UP_DIR,
   LED_MATRIX_TOGGLE
 };
 // clang-format on
@@ -55,7 +57,7 @@ enum layer_names { _BASE, _FN };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
-        CMD_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, LGUI(KC_LEFT), LGUI(KC_RIGHT),
+        CMD_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, GUI_LEFT_or_PGDN, GUI_RIGHT_or_PGUP,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
         QK_LEADER, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
@@ -125,6 +127,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       unregister_code(KC_TAB);
     }
     return true;
+  case GUI_LEFT_or_PGDN:
+    if (record->event.pressed) {
+      // Check if LGUI (Command) is already held
+      if (get_mods() & MOD_MASK_GUI) {
+        tap_code16(LCTL(KC_PGDN));  // Command is held → send Ctrl Page Down
+      } else {
+        // Command is NOT held → send LGUI + LEFT
+        tap_code16(LGUI(KC_LEFT));
+      }
+    }
+    return false;  // Skip further processing of MY_CUSTOM_KEY
+  case GUI_RIGHT_or_PGUP:
+    if (record->event.pressed) {
+      // Check if LGUI (Command) is already held
+      if (get_mods() & MOD_MASK_GUI) {
+        tap_code16(LCTL(KC_PGUP));  // Command is held → send Ctrl Page Up
+      } else {
+        // Command is NOT held → send LGUI + LEFT
+        tap_code16(LGUI(KC_RIGHT));
+      }
+    }
+    return false;  // Skip further processing of MY_CUSTOM_KEY
   case CTRL_W_O:
     if (record->event.pressed) {
       SEND_STRING(SS_LCTL("w") "o");

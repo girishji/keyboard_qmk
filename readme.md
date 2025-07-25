@@ -6,6 +6,12 @@
 ❯ git subtree add --prefix=keyboards/girish keyboard_qmk main
 ```
 
+# Make changes
+```
+> cd ~/git/qmk_firmware
+> make girish/opticalkb/rev3
+```
+
 # Commit to subtree directly
 ```
 # Make changes and then do this:

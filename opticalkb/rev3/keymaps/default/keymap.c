@@ -225,10 +225,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case LED_MATRIX_TOGGLE:
     if (record->event.pressed) {
       if (!led_matrix_level_1) {
-        is31fl3731_all_led_on(10);
+        is31fl3731_all_led_on(5);
         led_matrix_level_1 = true;
       } else if (!led_matrix_level_2) {
-        is31fl3731_all_led_on(20);
+        is31fl3731_all_led_on(10);
         led_matrix_level_2 = true;
       } else {
         is31fl3731_all_led_off();

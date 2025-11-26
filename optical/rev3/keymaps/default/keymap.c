@@ -50,7 +50,6 @@ enum layer_names { _BASE, _FN };
 // clang-format off
 // Mod_Tap feature causes delay and erratic behaviour. Remov it from
 //   important keys like Esc and PgDn
-// KC_MS_WH_UP/DOWN is mouse wheel up/down
 // LT(_FN, key) -> layer tap
 // MT(MOD_LCTL, key) -> mod tap
 // LCTL(KC_W)
@@ -61,14 +60,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
         CMD_GRV, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
-        QK_LEADER, OSM(MOD_LALT), KC_BTN1, MO(_FN), CMD_or_CTRL_W, KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
+        QK_LEADER, OSM(MOD_LALT), MS_BTN1, MO(_FN), CMD_or_CTRL_W, KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, LCTL(KC_PGUP), LCTL(KC_PGDN),
         _______, _______, CTRL_W_W, _______, _______, _______, _______, _______, _______, CTRL_W_O, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, CTRL_W_H, CTRL_W_J, CTRL_W_K, CTRL_W_L, _______, _______, _______, KC_MS_WH_UP,
-        KC_AUDIO_MUTE, _______, _______, _______, CTRL_W_C, _______, _______, CTRL_W_N, _______, _______, _______, KC_QUESTION, _______, KC_MS_WH_DOWN,
-        QK_BOOT, _______, KC_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, CMD_GRV, _______, BL_UP, BL_DOWN
+        _______, _______, _______, _______, _______, _______, _______, CTRL_W_H, CTRL_W_J, CTRL_W_K, CTRL_W_L, _______, _______, _______, MS_WHLU,
+        KC_AUDIO_MUTE, _______, _______, _______, CTRL_W_C, _______, _______, CTRL_W_N, _______, _______, _______, KC_QUESTION, _______, MS_WHLD,
+        QK_BOOT, _______, MS_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, CMD_GRV, _______, BL_UP, BL_DOWN
     )
 };
 

@@ -1,5 +1,13 @@
 #include "leader.h"
 
+void leader_g(void) {
+    SEND_STRING(SS_LGUI(SS_LCTL(SS_LSFT("g"))));  // cmd+ctrl+shift+g is mapped in macos to open gemini
+}
+
+void leader_ii(void) {
+    SEND_STRING("import importlib;importlib.reload(");
+}
+
 // Note:
 // - Vowels are avoided in map lhs, unless vowel refers to template parameter (ex. vector<int> is vi).
 // - `cat > /dev/null/` and you can invoke these keymaps
@@ -2032,6 +2040,11 @@ void leader_dmf(void) {  // mathematic functions
 // }
 
 void keyboard_pre_init_user(void) {
+    // misc
+    leader_map_key_sequence(leader_g, 1, KC_G);
+    // kicad pi utilitites
+    leader_map_key_sequence(leader_ii, 2, KC_I, KC_I);
+    // C/C++ utilitites
     leader_map_key_sequence(leader_fi, 2, KC_F, KC_I);
     leader_map_key_sequence(leader_fj, 2, KC_F, KC_J);
     leader_map_key_sequence(leader_fk, 2, KC_F, KC_K);

@@ -9,7 +9,12 @@
 # Make changes
 ```
 > cd ~/git/qmk_firmware
-> make girish/opticalkb/rev3
+> make girish/optical/rev3
+```
+
+# To make
+```
+> make girish/optical/rev3:default
 ```
 
 # Commit to subtree directly
@@ -24,4 +29,3 @@
 ```
 ❯ git subtree pull --prefix=keyboards/girish keyboard_qmk main
 ```
-

@@ -17,7 +17,7 @@ bool cmd_key_on = false;
 bool key_pressed_in_cmd_mode = false;
 uint16_t cmd_ctrl_w_timer = 0;
 
-const uint16_t MAX_WAIT_MULTI_KEY = 650;
+const uint16_t MAX_WAIT_MULTI_KEY = 800;
 
 bool led_matrix_level_1 = false;
 bool led_matrix_level_2 = false;
@@ -40,6 +40,7 @@ enum custom_keycodes {
   CTRL_W_C,
   CTRL_W_N,
   UP_DIR,
+  GEMINI,
   LED_MATRIX_TOGGLE
 };
 // clang-format on
@@ -52,22 +53,25 @@ enum layer_names { _BASE, _FN };
 //   important keys like Esc and PgDn
 // LT(_FN, key) -> layer tap
 // MT(MOD_LCTL, key) -> mod tap
+// QK_LEADER -> leader key
 // LCTL(KC_W)
+// LT(_FN, KC_RIGHT)
+// OSL(_FN)
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     /* Base */
     [_BASE] = LAYOUT(
         CMD_TAB, KC_1, KC_2, KC_3, KC_4, KC_5, KC_6, KC_7, KC_8, KC_9, KC_0, KC_MINS, KC_EQL, GUI_LEFT_or_PGDN, GUI_RIGHT_or_PGUP,
         KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T, KC_Y, KC_U, KC_I, KC_O, KC_P, KC_LBRC, KC_RBRC, KC_BSLS,
         OSM(MOD_LCTL), KC_ESC, KC_A, KC_S, KC_D, KC_F, KC_G, KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_ENT, KC_QUOT, KC_UP,
-        CMD_GRV, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
-        QK_LEADER, OSM(MOD_LALT), MS_BTN1, MO(_FN), CMD_or_CTRL_W, KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, LT(_FN, KC_KB_MUTE), OSM(MOD_RALT), KC_LEFT, KC_RIGHT
+        GEMINI, OSM(MOD_LSFT), KC_Z, KC_X, KC_C, KC_V, KC_B, KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, OSM(MOD_RSFT), KC_DOWN,
+        CMD_GRV, OSM(MOD_LALT), MS_BTN1, OSL(_FN), OSM(MOD_LGUI), KC_SPC, KC_GRV, KC_BSPC, KC_PGDN, KC_PGUP, KC_KB_MUTE, OSM(MOD_RALT), KC_LEFT, KC_RIGHT
     ),
     [_FN]   = LAYOUT(
         _______, KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6, KC_F7, KC_F8, KC_F9, KC_F10, KC_F11, KC_F12, LCTL(KC_PGUP), LCTL(KC_PGDN),
         _______, _______, CTRL_W_W, _______, _______, _______, _______, _______, _______, CTRL_W_O, _______, _______, _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, CTRL_W_H, CTRL_W_J, CTRL_W_K, CTRL_W_L, _______, _______, _______, MS_WHLU,
-        KC_AUDIO_MUTE, _______, _______, _______, CTRL_W_C, _______, _______, CTRL_W_N, _______, _______, _______, KC_QUESTION, _______, MS_WHLD,
-        QK_BOOT, _______, MS_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, CMD_GRV, _______, BL_UP, BL_DOWN
+        _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT, _______, _______, _______, MS_WHLU,
+        KC_RIGHT, KC_CAPS, _______, _______, CTRL_W_C, _______, _______, CTRL_W_N, _______, _______, _______, KC_QUESTION, KC_CAPS, MS_WHLD,
+        QK_BOOT, _______, MS_BTN3, _______, _______, _______, LED_MATRIX_TOGGLE, KC_DEL, KC_END, KC_HOME, QK_LEADER, _______, MS_WHLD, MS_WHLU
     )
 };
 
@@ -219,6 +223,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   case UP_DIR:
     if (record->event.pressed) {
       SEND_STRING("../");
+    }
+    return false;
+  case GEMINI:
+    if (record->event.pressed) {
+      SEND_STRING("@gemini ");
     }
     return false;
   case LED_MATRIX_TOGGLE:

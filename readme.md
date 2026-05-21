@@ -20,7 +20,7 @@
 # Commit to subtree directly
 ```
 # Make changes and then do this:
-❯ git add .
+❯ git add .; gitcommit
 ❯ cd ~/git/qmk_firmware
 ❯ git subtree push --prefix=keyboards/girish keyboard_qmk main
 ```
